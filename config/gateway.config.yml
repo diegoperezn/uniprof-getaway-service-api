@@ -1,0 +1,47 @@
+http:
+  port: 9090
+admin:
+  port: 9876
+  hostname: localhost
+apiEndpoints:
+  api:
+    host: *
+    paths: '/ip'
+  client:
+    host: *
+    paths: '/client*'  
+serviceEndpoints:
+  httpbin:
+    url: 'https://httpbin.org'
+  client:
+    url: 'https://dev-client-service-api.herokuapp.com'  
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  clientPipeline:
+    apiEndpoints:
+      - client
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: client 
+              changeOrigin: true
+  default:
+    apiEndpoints:
+      - api
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: httpbin 
+              changeOrigin: true
