@@ -5,14 +5,14 @@ admin:
   hostname: localhost
 apiEndpoints:
   api:
-    host: localhost
+    host: '*'
     paths: '/ip'
   client:
-    host: localhost
-    paths: '/client*'
+    host: '*'
+    paths: ['/client/', '/client*']
   design:
-    host: localhost
-    paths: '/design*'  
+    host: '*'
+    paths: ['/design/', '/design/*']
 serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'
